@@ -1,0 +1,12 @@
+{include environment.yaml}
+class: pyobs_sbig.SbigCamera
+comm:
+  class: pyobs.comm.dbus.DbusComm
+  name: camera
+vfs:
+  class: pyobs.vfs.VirtualFileSystem
+  roots:
+    cache:
+      class: pyobs.vfs.HttpFile
+      download: http://localhost:37075
+      upload: http://localhost:37075

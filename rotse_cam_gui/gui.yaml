@@ -1,0 +1,12 @@
+{include environment.yaml}
+class: pyobs_gui.GUI
+comm:
+  class: pyobs.comm.dbus.DbusComm
+  name: gui
+vfs:
+  class: pyobs.vfs.VirtualFileSystem
+  roots:
+    cache:
+      class: pyobs.vfs.HttpFile
+      download: http://localhost:37075
+      upload: http://localhost:37075

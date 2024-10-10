@@ -1,0 +1,6 @@
+{include baches_environment.yaml}
+class: pyobs.modules.utils.HttpFileCache
+port: 37075
+comm:
+  class: pyobs.comm.dbus.DbusComm
+  name: filecache
