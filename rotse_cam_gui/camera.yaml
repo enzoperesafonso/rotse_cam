@@ -1,5 +1,5 @@
 {include environment.yaml}
-class: pyobs_sbig.SbigCamera
+class: pyobs.modules.pyobs_andor.andorzylacamera.AndorZylaCamera
 comm:
   class: pyobs.comm.dbus.DbusComm
   name: camera

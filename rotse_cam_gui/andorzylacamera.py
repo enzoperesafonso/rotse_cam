@@ -13,7 +13,7 @@ from pyobs.utils.enums import ExposureStatus
 from pyobs.utils.parallel import event_wait
 
 # import the Andor SDK3 python wrapper provided with the camera ...
-from pyobs.modules.camera.atcore import ATCore
+from pyobs.modules.pyobs_andor.atcore import ATCore
 
 log = logging.getLogger(__name__)
 
