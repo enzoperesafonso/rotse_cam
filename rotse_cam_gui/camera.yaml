@@ -1,15 +1,6 @@
 {include environment.yaml}
 class: pyobs.modules.pyobs_andor.andorzylacamera.AndorZylaCamera
 
-
-filenames: /cache/iag50cm-kb03-{DAY-OBS|date:}-{FRAMENUM|string:04d}-{IMAGETYP|type}00.fits
-
-
-fits_headers:
-  'TELID': ['ROTSE', 'ID for telescope']
-  'SITEID': ['iag50cm', 'ID of site.']
-
-
 comm:
   class: pyobs.comm.dbus.DbusComm
   name: camera
