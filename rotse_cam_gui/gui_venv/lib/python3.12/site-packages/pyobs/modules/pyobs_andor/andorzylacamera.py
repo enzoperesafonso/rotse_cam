@@ -64,7 +64,7 @@ class AndorZylaCamera(
         Raises:
             ValueError: If cannot connect to camera.
         """
-        #await BaseCamera.open(self)
+        await BaseCamera.open(self)
 
         # open driver add pyobs utils exceptions ...
         log.info("Connecting to Andor camera ...")
@@ -213,7 +213,7 @@ class AndorZylaCamera(
 
         # set the binning on the camera ...
         log.info("Set binning to %dx%d.", self._binning[0], self._binning[1])
-        await self._driver.set_enum_string(
+        self._driver.set_enum_string(
             self._camera, "AOIBinning", f"{self._binning[0]}x{self._binning[1]}"
         )
 
@@ -238,36 +238,38 @@ class AndorZylaCamera(
         self._driver.set_enum_string(self._camera, "PixelEncoding", "Mono16")
 
         # set the window on the camera remembering the SDK3 has the origin at (+1,+1) ...
-        await self._driver.set_int(self._camera, "AOIWidth", width)
-        await self._driver.set_int(self._camera, "AOIHeight", height)
-        await self._driver.set_int(self._camera, "AOILeft", self._window[0] + 1)
-        await self._driver.set_int(self._camera, "AOITop", self._window[1] + 1)
+        self._driver.set_int(self._camera, "AOIWidth", width)
+        self._driver.set_int(self._camera, "AOIHeight", height)
+        self._driver.set_int(self._camera, "AOILeft", self._window[0] + 1)
+        self._driver.set_int(self._camera, "AOITop", self._window[1] + 1)
 
         # set the cameras shutter state ...
+       
         if open_shutter:
-            await self._driver.set_enum_string(self._camera, "ShutterMode", "Open")
+            self._driver.set_enum_string(self._camera, "ShutterMode", "Open")
         else:
-            await self._driver.set_enum_string(self._camera, "ShutterMode", "Closed")
+            self._driver.set_enum_string(self._camera, "ShutterMode", "Closed")
 
         # set the cameras exposure time in seconds ...
-        await self._driver.set_float(self._camera, "ExposureTime", exposure_time)
-
+        self._driver.set_float(self._camera, "ExposureTime", exposure_time)
+        
         # get the expected size of the required memory buffer in bytes from the camera ...
         imageSizeBytes = self._driver.get_int(self._camera, "ImageSizeBytes")
-
+        
         # setup a primary and secondary buffer as per SDK3 documentation ...s
         primary_buffer = np.empty((imageSizeBytes,), dtype="B")
         self._driver.queue_buffer(
             self._camera, primary_buffer.ctypes.data, imageSizeBytes
         )
-
+       
         secondary_buffer = np.empty((imageSizeBytes,), dtype="B")
         self._driver.queue_buffer(
             self._camera, secondary_buffer.ctypes.data, imageSizeBytes
         )
-
+        
         # get the current date and time of exposure ...
-        date_obs = datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%S.%f")
+        from datetime import datetime, timezone
+        date_obs = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")
 
         log.info(
             "Starting exposure with %s shutter for %.2f seconds...",

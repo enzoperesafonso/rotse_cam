@@ -4,10 +4,10 @@ class: pyobs.modules.pyobs_andor.andorzylacamera.AndorZylaCamera
 comm:
   class: pyobs.comm.dbus.DbusComm
   name: camera
+
 vfs:
-  class: pyobs.vfs.VirtualFileSystem
-  roots:
-    cache:
-      class: pyobs.vfs.HttpFile
-      download: http://localhost:37075
-      upload: http://localhost:37075
+    class: pyobs.vfs.VirtualFileSystem
+    roots:
+        cache:
+            class: pyobs.vfs.LocalFile
+            root: .

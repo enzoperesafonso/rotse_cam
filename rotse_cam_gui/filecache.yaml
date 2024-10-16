@@ -1,4 +1,4 @@
-{include baches_environment.yaml}
+{include environment.yaml}
 class: pyobs.modules.utils.HttpFileCache
 port: 37075
 comm:
